@@ -2,19 +2,15 @@ import java.util.*;
 
 public class PostManager {
 
-    
     public int calculateEngagement(int... interactions) {
-        if (interactions == null || interactions.length == 0) {
-            return 0;
-        }
+        if (interactions == null || interactions.length == 0) return 0;
         int total = 0;
-        for (int interaction : interactions) {
-            total += interaction;
+        for (int count : interactions) {
+            total += count;
         }
         return total;
     }
 
-   
     public String getCategoryRating(int engagementScore) {
         if (engagementScore >= 1000) {
             return "Viral";
@@ -29,7 +25,6 @@ public class PostManager {
         }
     }
 
-    
     public void displayPostStats(String postTitle, int engagementScore) {
         System.out.println("Post: " + postTitle);
         System.out.println("Engagement Score: " + engagementScore);
@@ -40,48 +35,39 @@ public class PostManager {
         System.out.println("Engagement Score: " + engagementScore);
         System.out.println("Category: " + category);
     }
-
-    
+   
     public ArrayList<String> manageHashtags(String[] hashtags) {
-        ArrayList<String> uniqueHashtags = new ArrayList<>();
-        if (hashtags == null) return uniqueHashtags;
-
-        int maxSize = Math.min(hashtags.length, 5);
-        Set<String> seen = new HashSet<>();
-
-        for (int i = 0; i < maxSize; i++) {
-            if (hashtags[i] != null && seen.add(hashtags[i])) {
-                uniqueHashtags.add(hashtags[i]);
-            }
+        int maxSize = 5;
+        String[] hashtagArray = new String[maxSize];
+        for (int i = 0; i < maxSize && i < hashtags.length; i++) {
+            hashtagArray[i] = hashtags[i];
         }
-
-        return uniqueHashtags;
+        HashSet<String> uniqueSet = new HashSet<>();
+        for (String tag : hashtagArray) {
+            if (tag != null) uniqueSet.add(tag);
+        }
+        return new ArrayList<>(uniqueSet);
     }
 
-  
     public LinkedList<String> findTrendingPosts(ArrayList<String> posts, HashMap<String, Integer> postEngagement) {
-        LinkedList<String> trendingPosts = new LinkedList<>();
-        if (posts == null || postEngagement == null) return trendingPosts;
-
+        LinkedList<String> trending = new LinkedList<>();
         for (String post : posts) {
-            if (postEngagement.containsKey(post) && postEngagement.get(post) > 500) {
-                trendingPosts.add(post);
+            Integer score = postEngagement.get(post);
+            if (score != null && score > 500) {
+                trending.add(post);
             }
         }
-
-        return trendingPosts;
+        return trending;
     }
 
-    
     public HashSet<String> getUniqueAuthors(String... authors) {
         HashSet<String> uniqueAuthors = new HashSet<>();
-        if (authors == null) return uniqueAuthors;
-
-        for (String author : authors) {
-            if (author != null) {
-                uniqueAuthors.add(author);
+        if (authors != null) {
+            for (String author : authors) {
+                if (author != null) uniqueAuthors.add(author);
             }
         }
-
         return uniqueAuthors;
     }
+
+   

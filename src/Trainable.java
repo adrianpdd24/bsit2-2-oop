@@ -1,0 +1,3 @@
+interface Trainable {
+    void performTrick();
+}
